@@ -1,71 +1,86 @@
-let userscore=0;
-let compscore=0;
-const choices=document.querySelectorAll(".choice");
-const msg=document.querySelector("#msg");
-const userscorepara=document.querySelector("#user-score");
-const compscorepara=document.querySelector("#comp-score");
-const gencompchoice=()=>{
-    const options=["rock","paper","scissors"];
-    const randidx=Math.floor(Math.random()*3);
-    return options[randidx];
-     
+let userscore = 0;
+let compscore = 0;
+let gameActive = false;
 
+const choices = document.querySelectorAll(".choice");
+const msg = document.querySelector("#msg");
+const userScorePara = document.querySelector("#user-score");
+const compScorePara = document.querySelector("#comp-score");
+const startBtn = document.querySelector("#start-btn");
+const stopBtn = document.querySelector("#stop-btn");
 
+const genCompChoice = () => {
+    const options = ["rock", "paper", "scissors"];
+    const randIdx = Math.floor(Math.random() * 3);
+    return options[randIdx];
 };
-const showinner=(userwin,userchoice,compchoice)=>{
-    if(userwin){
+
+const showWinner = (userWin, userChoice, compChoice) => {
+    if (userWin) {
         userscore++;
-        console.log("You win");
-        msg.innerText=`You won! Your ${userchoice} beats ${compchoice}`;
-        msg.style.backgroundColor="green";
-        userscorepara.innerText=userscore;
-        
-    } 
-    else{
+        msg.innerText = `You won! Your ${userChoice} beats ${compChoice}`;
+        msg.style.backgroundColor = "green";
+        userScorePara.innerText = userscore;
+    } else {
         compscore++;
-        console.log("You lose");
-        msg.innerText=`You lose.${compchoice} beats your ${userchoice}`;
-        msg.style.backgroundColor="red";
-        compscorepara.innerText=compscore;
+        msg.innerText = `You lose. ${compChoice} beats your ${userChoice}`;
+        msg.style.backgroundColor = "red";
+        compScorePara.innerText = compscore;
     }
 };
-const drawgame=()=>{
-    console.log("Game draw");
-    msg.innerText="Game Draw";
 
+const drawGame = () => {
+    msg.innerText = "Game Draw";
+    msg.style.backgroundColor = "yellow";
 };
- const playgame=(userchoice)=>{
-    console.log("user ",userchoice);
-    const compchoice=gencompchoice();
-    console.log("comp choice=",compchoice);
-    if(userchoice===compchoice){
-        drawgame();
-    }else{
-        let userwin=true;
-        if(userchoice==="rock"){
-            userwin=compchoice=="paper"?false:true;
 
+const playGame = (userChoice) => {
+    if (!gameActive) return; 
+    const compChoice = genCompChoice();
+    if (userChoice === compChoice) {
+        drawGame();
+    } else {
+        let userWin = true;
+        if (userChoice === "rock") {
+            userWin = compChoice === "paper" ? false : true;
+        } else if (userChoice === "paper") {
+            userWin = compChoice === "scissors" ? false : true;
+        } else {
+            userWin = compChoice === "rock" ? false : true;
         }
-        else if(userchoice==="paper"){
-            userwin=compchoice=="scissors"?false:true;
-        }
-        else{
-            userwin=compchoice=="rock"?false:true;
-
- 
+        showWinner(userWin, userChoice, compChoice);
     }
-    showinner(userwin,userchoice,compchoice);
-}
-
 };
 
-
-choices.forEach((choice)=>{
-    choice.addEventListener("click",()=>{
-        const userchoice=choice.getAttribute("id");
-        playgame(userchoice);
-        
-         
-
+choices.forEach((choice) => {
+    choice.addEventListener("click", () => {
+        if (!gameActive) {
+            alert("Please start the game first!");
+            return;
+        }
+        const userChoice = choice.getAttribute("id");
+        playGame(userChoice);
     });
+});
+
+
+startBtn.addEventListener("click", () => {
+    gameActive = true;
+    userscore = 0;
+    compscore = 0;
+    userScorePara.innerText = userscore;
+    compScorePara.innerText = compscore;
+    msg.innerText = "Game started! Make your move.";
+    msg.style.backgroundColor = "#081b31";
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+});
+
+
+stopBtn.addEventListener("click", () => {
+    gameActive = false;
+    msg.innerText = "Game stopped! Final score: You - " + userscore + ", Comp - " + compscore;
+    msg.style.backgroundColor = "#333";
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
 });

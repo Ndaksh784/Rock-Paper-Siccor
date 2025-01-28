@@ -1,70 +1,107 @@
-*{
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     text-align: center;
+    font-family: Arial, sans-serif;
 }
-h1{
-    background-color: #081b31; ;
-    color:white;
-    height: 5rem;
-    justify-content: center;
-    align-content: center;
 
+h1 {
+    background-color: #081b31;
+    color: white;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
 }
-.choice:hover{
-    cursor: grabbing;
-   
-    background-color: black;
-}
-.choices{
+
+
+.controls {
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
-    align-content: center;
-    margin-top: 5%;
-    justify-content: space-between;
-    
+    gap: 1rem;
 }
-.choice{
-    height:165px;    
-    width:165px;
+
+button {
+    background-color: #081b31;
+    color: white;
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #035ba1;
+}
+
+button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+
+.choices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    gap: 2rem;
+}
+
+.choice {
+    height: 165px;
+    width: 165px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    
-    
-    
+    background-color: #f2f2f2;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
-img{
-    height:100px;
-    width:100px;
+
+.choice:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    background-color: black;
+}
+
+img {
+    height: 100px;
+    width: 100px;
     object-fit: cover;
     border-radius: 50%;
 }
-.score_board{
-    display:flex ;
+
+
+.score_board {
+    display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
     margin-top: 3rem;
-    gap:2rem;
+    gap: 2rem;
+}
 
-}
 #user-score,
-#comp-score{
-    font-size:4 rem;
+#comp-score {
+    font-size: 4rem;
 }
-.msg-container{
+
+.msg-container {
     margin-top: 2rem;
 }
-#msg{
-    
+
+#msg {
     font-size: 3rem;
     color: white;
     background-color: #081b31;
     padding: 1rem;
     border-radius: 1rem;
-    display:inline;
+    display: inline-block;
 }
- 
